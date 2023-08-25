@@ -4,7 +4,9 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { EmailVerificationModule } from './email-verification/email-verification.module';
 import { ExampleModule } from './example/example.module';
+import { UserClientModule } from './user/modules/client/user.client.module';
 
 export const graphqlPath = '/graphql';
 
@@ -23,11 +25,13 @@ export const graphqlPath = '/graphql';
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             path: graphqlPath,
-            include: [ExampleModule],
+            include: [ExampleModule, UserClientModule, EmailVerificationModule],
             autoSchemaFile: true,
             driver: ApolloDriver,
         }),
         ExampleModule,
+        UserClientModule,
+        EmailVerificationModule,
     ],
 })
 export class AppModule {}
